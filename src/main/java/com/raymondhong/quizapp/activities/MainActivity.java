@@ -1,7 +1,9 @@
-package com.raymondhong.quizapp;
+package com.raymondhong.quizapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.raymondhong.quizapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
