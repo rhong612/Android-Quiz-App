@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     private Button trueBtn;
     private Button falseBtn;
-    private Button nextBtn;
+    private ImageButton nextBtn;
+    private ImageButton prevBtn;
     private TextView questionText;
     private ArrayList<Question> questionList;
     private int currentQuesIndex;
@@ -42,16 +44,25 @@ public class QuestionActivity extends AppCompatActivity {
                 checkAnswer(false);
             }
         });
-        nextBtn = (Button) findViewById(R.id.next_button);
+
+        nextBtn = (ImageButton) findViewById(R.id.next_button);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setNextQuestion();
             }
         });
+
+        prevBtn = (ImageButton) findViewById(R.id.previous_button);
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPreviousQuestion();
+            }
+        });
+
         currentQuesIndex = 0;
         questionList = new ArrayList<>();
-
         initializeQuestions();
 
         //Set initial question
@@ -59,6 +70,9 @@ public class QuestionActivity extends AppCompatActivity {
         questionText.setText(nQuestion.getTextResID());
     }
 
+    /**
+     * Changes the question displayed to the next one in the question list
+     */
     private void setNextQuestion() {
         if (currentQuesIndex + 1 < questionList.size()) {
             currentQuesIndex++;
@@ -67,6 +81,21 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Changes the question displayed to the previous one in the question list
+     */
+    private void setPreviousQuestion() {
+        if (currentQuesIndex - 1 >= 0) {
+            currentQuesIndex--;
+            Question nQuestion = questionList.get(currentQuesIndex);
+            questionText.setText(nQuestion.getTextResID());
+        }
+    }
+
+    /**
+     * Pops out a Toast that says "Correct" if the user selected the correct answer to the question, "Wrong!" otherwise
+     * @param answer the user's answer to the question
+     */
     private void checkAnswer(boolean answer) {
         if (answer == questionList.get(currentQuesIndex).isCorrect()) {
             Toast.makeText(QuestionActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
@@ -76,6 +105,9 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds the questions to the question list
+     */
     private void initializeQuestions() {
         questionList.add(new Question(R.string.question_one, true));
         questionList.add(new Question(R.string.question_two, true));

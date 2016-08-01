@@ -10,32 +10,52 @@
     tools:context=".activities.QuestionActivity">
 
     <TextView
-        android:id = "@+id/question_text"
+        android:id="@+id/question_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
-    <Button
-        android:id = "@+id/true_button"
-        android:text="@string/true_text"
+    <LinearLayout
+        android:id="@+id/layout_true_false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/question_text"
-        android:layout_toRightOf="@+id/false_button"/>
+        android:layout_below="@id/question_text"
+        android:layout_centerHorizontal="true">
 
+        <Button
+            android:id="@+id/true_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/true_text" />
 
-    <Button
-        android:id = "@+id/false_button"
-        android:text="@string/false_text"
+        <Button
+            android:id="@+id/false_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/false_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_next_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/question_text"/>
+        android:layout_below="@id/layout_true_false"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id = "@+id/next_button"
-        android:text="@string/next_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/true_button"/>
+        <ImageButton
+            android:id="@+id/previous_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/arrow_button_padding"
+            android:src="@drawable/arrow_left" />
+
+        <ImageButton
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/arrow_button_padding"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
