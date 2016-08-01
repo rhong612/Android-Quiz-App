@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Quiz App</string>
+    <string name="true_text">True</string>
+    <string name="false_text">False</string>
+    <string name="next_text">Next</string>
+
+
+    <string name="question_one">The libero in Volleyball is a defensive player.</string>
+    <string name="question_two">A clear in badminton is a long high shot that goes to the backcourt.</string>
+    <string name="question_three">Grapes are green.</string>
+    <string name="question_four">Bicycles can go over 100 km/hr.</string>
+    <string name="question_five">The name of the main character of The Hunger Games is Katniss Evergreen.</string>
+    <string name="question_six">Hippos can have red sweat.</string>
+
+    <string name="correct_toast">Correct!</string>
+    <string name="wrong_toast">Wrong!</string>
 </resources>

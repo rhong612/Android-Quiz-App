@@ -11,4 +11,12 @@ public class Question {
         this.textResID = textResID;
         this.isCorrect = isCorrect;
     }
+
+    public int getTextResID() {
+        return textResID;
+    }
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
 }
