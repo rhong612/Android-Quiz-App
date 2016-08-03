@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
 
+    public static final String INDEX_KEY = "index";
+
     private Button trueBtn;
     private Button falseBtn;
     private ImageButton nextBtn;
@@ -23,10 +25,12 @@ public class QuestionActivity extends AppCompatActivity {
     private ArrayList<Question> questionList;
     private int currentQuesIndex;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
 
         questionText = (TextView) findViewById(R.id.question_text);
 
@@ -61,7 +65,12 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        currentQuesIndex = 0;
+
+        if (savedInstanceState != null)
+            currentQuesIndex = savedInstanceState.getInt(INDEX_KEY);
+        else
+            currentQuesIndex = 0;
+
         questionList = new ArrayList<>();
         initializeQuestions();
 
@@ -90,6 +99,12 @@ public class QuestionActivity extends AppCompatActivity {
             Question nQuestion = questionList.get(currentQuesIndex);
             questionText.setText(nQuestion.getTextResID());
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(INDEX_KEY, currentQuesIndex);
     }
 
     /**
