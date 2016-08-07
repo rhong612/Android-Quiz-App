@@ -4,6 +4,11 @@
     <string name="false_text">False</string>
     <string name="next_text">Next</string>
 
+    <string name = "cheat_text">Cheat!</string>
+    <string name = "warning_text">You can only cheat once - are you sure?</string>
+
+    <string name = "answer_text">Show Answer</string>
+
 
     <string name="question_one">The libero in Volleyball is a defensive player.</string>
     <string name="question_two">A clear in badminton is a long high shot that goes to the backcourt.</string>
@@ -14,4 +19,6 @@
 
     <string name="correct_toast">Correct!</string>
     <string name="wrong_toast">Wrong!</string>
+    <string name="back_text">Back</string>
+    <string name="error_text">You can\'t cheat more than once!</string>
 </resources>

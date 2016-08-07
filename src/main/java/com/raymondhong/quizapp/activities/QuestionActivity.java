@@ -1,5 +1,7 @@
 package com.raymondhong.quizapp.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,10 +17,12 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    public static final String INDEX_KEY = "index";
+    private static final String INDEX_KEY = "index";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button trueBtn;
     private Button falseBtn;
+    private Button cheatBtn;
     private ImageButton nextBtn;
     private ImageButton prevBtn;
     private TextView questionText;
@@ -65,7 +69,6 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-
         if (savedInstanceState != null)
             currentQuesIndex = savedInstanceState.getInt(INDEX_KEY);
         else
@@ -74,10 +77,22 @@ public class QuestionActivity extends AppCompatActivity {
         questionList = new ArrayList<>();
         initializeQuestions();
 
+
+        cheatBtn = (Button) findViewById(R.id.cheat_button);
+        cheatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cheatAct = CheatActivity.newIntent(QuestionActivity.this, questionList.get(currentQuesIndex).isCorrect());
+                startActivityForResult(cheatAct, REQUEST_CODE_CHEAT);
+            }
+        });
+
         //Set initial question
         Question nQuestion = questionList.get(currentQuesIndex);
         questionText.setText(nQuestion.getTextResID());
+
     }
+
 
     /**
      * Changes the question displayed to the next one in the question list

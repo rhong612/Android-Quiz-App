@@ -5,4 +5,5 @@
 
 
     <dimen name="arrow_button_padding">20dp</dimen>
+    <dimen name="margin">20dp</dimen>
 </resources>
