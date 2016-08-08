@@ -1,10 +1,14 @@
 package com.raymondhong.quizapp.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ public class CheatActivity extends AppCompatActivity {
     private Button answerBtn;
     private Button backBtn;
     private TextView text;
+    private TextView buildText;
     private boolean isCorrect;
     private boolean hasCheated;
 
@@ -47,6 +52,24 @@ public class CheatActivity extends AppCompatActivity {
                     text.setText(R.string.false_text);
                 }
                 hasCheated = true;
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    int cx = answerBtn.getWidth() / 2;
+                    int cy = answerBtn.getHeight() / 2;
+                    float radius = answerBtn.getWidth();
+                    Animator anim = ViewAnimationUtils.createCircularReveal(answerBtn, cx, cy, radius, 0);
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            answerBtn.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    anim.start();
+                }
+                else {
+                    answerBtn.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -56,6 +79,10 @@ public class CheatActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        buildText = (TextView) findViewById(R.id.build_version_text);
+        String buildVer = "API Level " + Build.VERSION.SDK_INT;
+        buildText.setText(buildVer);
     }
 
     @Override
