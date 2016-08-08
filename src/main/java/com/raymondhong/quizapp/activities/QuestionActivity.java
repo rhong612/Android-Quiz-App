@@ -1,6 +1,6 @@
 package com.raymondhong.quizapp.activities;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class QuestionActivity extends AppCompatActivity {
 
     private static final String INDEX_KEY = "index";
+    private static final String CHEAT_KEY = "cheat";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button trueBtn;
@@ -26,6 +27,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ImageButton nextBtn;
     private ImageButton prevBtn;
     private TextView questionText;
+    private boolean hasCheated;
     private ArrayList<Question> questionList;
     private int currentQuesIndex;
 
@@ -69,21 +71,29 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             currentQuesIndex = savedInstanceState.getInt(INDEX_KEY);
-        else
+            hasCheated = savedInstanceState.getBoolean(CHEAT_KEY);
+        }
+        else {
             currentQuesIndex = 0;
+            hasCheated = false;
+        }
 
         questionList = new ArrayList<>();
         initializeQuestions();
-
 
         cheatBtn = (Button) findViewById(R.id.cheat_button);
         cheatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cheatAct = CheatActivity.newIntent(QuestionActivity.this, questionList.get(currentQuesIndex).isCorrect());
-                startActivityForResult(cheatAct, REQUEST_CODE_CHEAT);
+                if (!hasCheated) {
+                    Intent cheatAct = CheatActivity.newIntent(QuestionActivity.this, questionList.get(currentQuesIndex).isCorrect());
+                    startActivityForResult(cheatAct, REQUEST_CODE_CHEAT);
+                }
+                else {
+                    Toast.makeText(QuestionActivity.this, R.string.error_toast, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -120,6 +130,7 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(INDEX_KEY, currentQuesIndex);
+        outState.putBoolean(CHEAT_KEY, hasCheated);
     }
 
     /**
@@ -145,5 +156,15 @@ public class QuestionActivity extends AppCompatActivity {
         questionList.add(new Question(R.string.question_four, true));
         questionList.add(new Question(R.string.question_five, false));
         questionList.add(new Question(R.string.question_six, true));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            hasCheated = CheatActivity.wasAnswerShown(data);
+        }
     }
 }
