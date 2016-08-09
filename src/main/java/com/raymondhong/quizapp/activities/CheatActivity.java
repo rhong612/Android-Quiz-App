@@ -105,12 +105,24 @@ public class CheatActivity extends AppCompatActivity {
         hasCheated = savedInstanceState.getBoolean(KEY_CHEATED);
     }
 
+
+    /**
+     * Creates a new intent of CheatActivity
+     * @param packageContext the context
+     * @param answerIsTrue true if the answer to the current question is true
+     * @return the intent of CheatActivity
+     */
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
         Intent cheatAct = new Intent(packageContext, CheatActivity.class);
         cheatAct.putExtra(EXTRA_CHEAT_KEY, answerIsTrue);
         return cheatAct;
     }
 
+    /**
+     * Gets the boolean value from the supplied Intent - the Intent should be one that was received from the newIntent(Context, boolean) function
+     * @param data the intent to get the value from
+     * @return the boolean value that was put into the intent
+     */
     public static boolean wasAnswerShown(Intent data) {
         return data.getBooleanExtra(EXTRA_HAS_CHEATED, false);
     }
